@@ -4,11 +4,11 @@
 
 > This library would not be possible without the awesome work on [paystack-go](https://github.com/snapay/rn-paystack) by Yao Adzaku
 
-paystack-go is a Go client library for accessing the Paystack API.
+go-paystack is a Go client library for accessing the Paystack API.
 
 ## Installation
 
-go-paystack uses go modules so make sure you have a mod file in your project or generate one using 
+go-paystack uses go modules so make sure you have a mod file in your project or generate one using
 
 ```bash
 go mod init github.com/my/repo
@@ -24,7 +24,7 @@ go get github.com/snapay-labs/go-paystack
 
 Getting up and running using go-paystack is simple, see for yourself.
 
-``` go
+```go
 import "github.com/snapay-labs/go-paystack"
 
 apiKey := "sk_test_b748a89ad84f35c2f1a8b81681f956274de048bb"
