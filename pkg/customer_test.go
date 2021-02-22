@@ -44,22 +44,22 @@ func TestCustomerCRUD(t *testing.T) {
 	}
 }
 
-func TestCustomerRiskAction(t *testing.T) {
-	cust := &Customer{
-		FirstName: "User123",
-		LastName:  "AdminUser",
-		Email:     "user1-deny@gmail.com",
-		Phone:     "+2341000000000000",
-	}
-	customer1, _ := c.Customer.Create(cust)
+// func TestCustomerRiskAction(t *testing.T) {
+// 	cust := &Customer{
+// 		FirstName: "User123",
+// 		LastName:  "AdminUser",
+// 		Email:     "user1-deny@gmail.com",
+// 		Phone:     "+2341000000000000",
+// 	}
+// 	customer1, _ := c.Customer.Create(cust)
 
-	//TODO: investigate why 'allow' returns: 403 You cannot whitelist customers on this integration
-	customer, err := c.Customer.SetRiskAction(customer1.CustomerCode, "deny")
-	if err != nil {
-		t.Errorf("Customer risk action returned error %v", err)
-	}
+// 	//TODO: investigate why 'allow' returns: 403 You cannot whitelist customers on this integration
+// 	customer, err := c.Customer.SetRiskAction(customer1.CustomerCode, "deny")
+// 	if err != nil {
+// 		t.Errorf("Customer risk action returned error %v", err)
+// 	}
 
-	if customer.Email != customer1.Email {
-		t.Errorf("Expected Customer email %v, got %v", cust.Email, customer.Email)
-	}
-}
+// 	if customer.Email != customer1.Email {
+// 		t.Errorf("Expected Customer email %v, got %v", cust.Email, customer.Email)
+// 	}
+// }

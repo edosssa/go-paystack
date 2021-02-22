@@ -232,16 +232,16 @@ func mapstruct(data interface{}, v interface{}) error {
 }
 
 func mustGetTestKey() string {
-	err := godotenv.Load("../.env")
-	if err != nil {
-		log.Fatal("Error loading .env file")
+	envKey := "PAYSTACK_KEY"
+	if _, ok := os.LookupEnv("GITHUB_ACTIONS"); !ok {
+		if err := godotenv.Load("../.env"); err != nil {
+			log.Fatal("Error loading .env file")
+		}
 	}
-	key := os.Getenv("PAYSTACK_KEY")
-	if len(key) == 0 {
-		panic("PAYSTACK_KEY environment variable is not set\n")
+	if k, ok := os.LookupEnv(envKey); ok {
+		return k
 	}
-
-	return key
+	panic(fmt.Sprintf("PAYSTACK_KEY environment variable is not set\n"))
 }
 
 // decodeResponse decodes the JSON response from the Paystack API.
