@@ -8,8 +8,6 @@ paystack-go is a Go client library for accessing the Paystack API.
 
 ## Installation
 
-Getting up and running using go-paystack is simple, see for yourself.
-
 go-paystack uses go modules so make sure you have a mod file in your project or generate one using 
 
 ```bash
@@ -23,6 +21,8 @@ go get github.com/snapay-labs/go-paystack
 ```
 
 ## Quickstart
+
+Getting up and running using go-paystack is simple, see for yourself.
 
 ``` go
 import "github.com/snapay-labs/go-paystack"
