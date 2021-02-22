@@ -2,19 +2,11 @@
 
 [![GoDoc](http://img.shields.io/badge/godoc-reference-blue.svg)](http://godoc.org/github.com/snapay-labs/go-paystack)
 
-> This library would not be possible without the awesome work on [paystack-go](https://github.com/snapay/rn-paystack) by Yao Adzaku
-
 go-paystack is a Go client library for accessing the Paystack API.
 
 ## Installation
 
-go-paystack uses go modules so make sure you have a mod file in your project or generate one using
-
-```bash
-go mod init github.com/my/repo
-```
-
-And then install go-paystack
+go-paystack is available using the standard go get command.
 
 ```bash
 go get github.com/snapay-labs/go-paystack
