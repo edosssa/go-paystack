@@ -10,8 +10,10 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+	"strconv"
 	"time"
 
+	"github.com/joho/godotenv"
 	"github.com/mitchellh/mapstructure"
 )
 
@@ -109,7 +111,7 @@ func NewClient(key string, httpClient *http.Client) *Client {
 		client:         httpClient,
 		key:            key,
 		baseURL:        u,
-		LoggingEnabled: true,
+		LoggingEnabled: false,
 		Log:            log.New(os.Stderr, "", log.LstdFlags),
 	}
 
@@ -203,7 +205,7 @@ func (c *Client) GetSessionTimeout() (Response, error) {
 // UpdateSessionTimeout updates payment session timeout
 func (c *Client) UpdateSessionTimeout(timeout int) (Response, error) {
 	data := url.Values{}
-	data.Add("timeout", string(timeout))
+	data.Add("timeout", strconv.Itoa(timeout))
 	resp := Response{}
 	u := "/integration/payment_session_timeout"
 	err := c.Call("PUT", u, data, &resp)
@@ -230,8 +232,11 @@ func mapstruct(data interface{}, v interface{}) error {
 }
 
 func mustGetTestKey() string {
+	err := godotenv.Load("../.env")
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
 	key := os.Getenv("PAYSTACK_KEY")
-
 	if len(key) == 0 {
 		panic("PAYSTACK_KEY environment variable is not set\n")
 	}
@@ -239,7 +244,7 @@ func mustGetTestKey() string {
 	return key
 }
 
-// decodeResponse decodes the JSON response from the Twitter API.
+// decodeResponse decodes the JSON response from the Paystack API.
 // The actual response will be written to the `v` parameter
 func (c *Client) decodeResponse(httpResp *http.Response, v interface{}) error {
 	var resp Response
@@ -250,7 +255,7 @@ func (c *Client) decodeResponse(httpResp *http.Response, v interface{}) error {
 		if c.LoggingEnabled {
 			c.Log.Printf("Paystack error: %+v", err)
 		}
-		return newAPIError(httpResp)
+		return newAPIError(httpResp, respBody)
 	}
 
 	if c.LoggingEnabled {

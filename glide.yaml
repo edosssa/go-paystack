@@ -1,3 +1,0 @@
-package: github.com/rpip/paystack-go
-import:
-- package: github.com/mitchellh/mapstructure

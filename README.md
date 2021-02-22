@@ -1,19 +1,31 @@
-[![GoDoc](http://img.shields.io/badge/godoc-reference-blue.svg)](http://godoc.org/github.com/rpip/paystack-go) [![Build Status](https://travis-ci.org/rpip/paystack-go.svg?branch=master)](https://travis-ci.org/rpip/paystack-go)
+# Paystack client for Golang
 
-# Go library for the Paystack API.
+[![GoDoc](http://img.shields.io/badge/godoc-reference-blue.svg)](http://godoc.org/github.com/snapay-labs/go-paystack)
+
+> This library would not be possible without the awesome work on [paystack-go](https://github.com/snapay/rn-paystack) by Yao Adzaku
 
 paystack-go is a Go client library for accessing the Paystack API.
 
-Where possible, the services available on the client groups the API into logical chunks and correspond to the structure of the Paystack API documentation at https://developers.paystack.co/v1.0/reference.
+## Installation
 
-## NOTE
+Getting up and running using go-paystack is simple, see for yourself.
 
-I haven't personally used this library since early 2018. I no longer actively maintain this project. My apologies to those of you who have come to rely on this library. If you are interested in becoming the new maintainer, send me an email and we can discuss yao [at] adzaku [dot] com. 
+go-paystack uses go modules so make sure you have a mod file in your project or generate one using 
 
-## Usage
+```bash
+go mod init github.com/my/repo
+```
+
+And then install go-paystack
+
+```bash
+go get github.com/snapay-labs/go-paystack
+```
+
+## Quickstart
 
 ``` go
-import "github.com/rpip/paystack-go"
+import "github.com/snapay-labs/go-paystack"
 
 apiKey := "sk_test_b748a89ad84f35c2f1a8b81681f956274de048bb"
 
@@ -71,19 +83,6 @@ customer, err := client.Customers.Get(customer.ID)
 
 See the test files for more examples.
 
-## Docker
+<br>
 
-Test this library in a docker container:
-
-```bash
-$ make docker && docker run -i -t paystack:latest
-```
-
-To use a different API key, update the API key in runtests.sh file.
-
-## TODO
-- [ ] Maybe support request context?
-- [ ] Test on App Engine
-
-## CONTRIBUTING
-Contributions are of course always welcome. The calling pattern is pretty well established, so adding new methods is relatively straightforward. Please make sure the build succeeds and the test suite passes.
+Made wth ❤️ by [Snapay](http://www.snapay.ng)

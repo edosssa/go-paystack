@@ -56,8 +56,8 @@ func (s *CustomerService) Update(customer *Customer) (*Customer, error) {
 
 // Get returns the details of a customer.
 // For more details see https://developers.paystack.co/v1.0/reference#fetch-customer
-func (s *CustomerService) Get(id int) (*Customer, error) {
-	u := fmt.Sprintf("/customer/%d", id)
+func (s *CustomerService) Get(emailOrCode string) (*Customer, error) {
+	u := fmt.Sprintf("/customer/%s", emailOrCode)
 	cust := &Customer{}
 	err := s.client.Call("GET", u, nil, cust)
 
