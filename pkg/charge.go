@@ -5,8 +5,8 @@ import (
 	"net/url"
 )
 
-// ChargeService handles operations related to bulk charges
-// For more details see https://developers.paystack.co/v1.0/reference#charge-tokenize
+// ChargeService allows you to configure payment channel of your choice when initiating a payment.
+// For more details see https://paystack.com/docs/api/#charge
 type ChargeService service
 
 // Card represents a Card object
@@ -24,25 +24,44 @@ type Card struct {
 }
 
 // BankAccount is used as bank in a charge request
+// See https://paystack.com/docs/payments/payment-channels#bank-accounts for more details
 type BankAccount struct {
 	Code          string `json:"code,omitempty"`
 	AccountNumber string `json:"account_number,omitempty"`
 }
 
+// MobileMoney represents a mobile money payment channel
+// See https://paystack.com/docs/payments/payment-channels#mobile-money for more details
+type MobileMoney struct {
+	Phone string `json:"phone,omitempty"`
+	// valid providers are "mtn", "voda", and "tgo"
+	Provider string `json:"provider,omitempty"`
+}
+
+// QRCode todo: add better documentation
+// See https://paystack.com/docs/payments/payment-channels#qr-code for more details
+type QRCode struct {
+	Provider string `json:"provider,omitempty"`
+}
+
 // ChargeRequest represents a Paystack charge request
 type ChargeRequest struct {
-	Email             string       `json:"email,omitempty"`
-	Amount            float32      `json:"amount,omitempty"`
-	Birthday          string       `json:"birthday,omitempty"`
+	Email    string  `json:"email,omitempty"`
+	Amount   float32 `json:"amount,omitempty"`
+	Birthday string  `json:"birthday,omitempty"`
+	// Only use this payment channel if your organization is PCI DSS compliant
+	// See https://paystack.com/docs/payments/payment-channels#cards for more details
 	Card              *Card        `json:"card,omitempty"`
 	Bank              *BankAccount `json:"bank,omitempty"`
 	AuthorizationCode string       `json:"authorization_code,omitempty"`
 	Pin               string       `json:"pin,omitempty"`
+	MobileMoney       *MobileMoney `json:"mobile_money,omitempty"`
 	Metadata          *Metadata    `json:"metadata,omitempty"`
+	QR                *QRCode      `json:"qr,omitempty"`
 }
 
 // Create submits a charge request using card details or bank details or authorization code
-// For more details see https://developers.paystack.co/v1.0/reference#charge
+// For more details see https://paystack.com/docs/api/#charge-create
 func (s *ChargeService) Create(req *ChargeRequest) (Response, error) {
 	resp := Response{}
 	err := s.client.Call("POST", "/charge", req, &resp)
