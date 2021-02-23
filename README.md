@@ -12,6 +12,26 @@ go-paystack is available using the standard go get command.
 go get github.com/snapay-labs/go-paystack
 ```
 
+Before running tests, you need to set the ```PAYSTACK_KEY``` environment variable.
+You can easily do this by creating a ```.env``` file in your project root with the following contents and we'll load it automatically when tests are run.
+
+```
+PAYSTACK_KEY=<paystack-secret-key>
+```
+
+If you don't have a test secret key, you can create one from your [paystack dashboard](https://dashboard.paystack.com/#/settings/profile).
+
+
+> We don't allow using production secret keys while running tests. Test secret keys always have an **sk_test_** prefix.
+
+Run tests
+
+```bash
+go test ./...
+```
+
+
+
 ## Quickstart
 
 Getting up and running using go-paystack is simple, see for yourself.
