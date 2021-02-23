@@ -11,6 +11,7 @@ import (
 	"net/url"
 	"os"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/joho/godotenv"
@@ -239,6 +240,9 @@ func mustGetTestKey() string {
 		}
 	}
 	if k, ok := os.LookupEnv(envKey); ok {
+		if !strings.Contains(k, "sk_test_") {
+			panic("Cannot use a production secret key to run tests")
+		}
 		return k
 	}
 	panic(fmt.Sprintf("PAYSTACK_KEY environment variable is not set\n"))
