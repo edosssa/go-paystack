@@ -1,23 +1,27 @@
 package paystack
 
-import "testing"
+import (
+	"testing"
+
+	"github.com/stretchr/testify/assert"
+)
 
 func TestBankList(t *testing.T) {
-	// retrieve the bank list
+	assert := assert.New(t)
 	banks, err := c.Bank.List()
-
-	if err != nil || !(len(banks.Values) > 0) {
-		t.Errorf("Expected Bank list, got %d, returned error %v", len(banks.Values), err)
+	if err != nil {
+		t.Error(err)
 	}
+	assert.Greater(len(banks.Values), 0)
 }
 
 func TestResolveBVN(t *testing.T) {
+	assert := assert.New(t)
+
 	// Test invlaid BVN.
 	// Err not nill. Resp status code is 400
 	resp, err := c.Bank.ResolveBVN(21212917)
-	if err == nil {
-		t.Errorf("Expected error for invalid BVN, got %+v'", resp)
-	}
+	assert.Error(err, "Expected error for invalid BVN")
 
 	// Test free calls limit
 	// Error is nil
@@ -30,18 +34,12 @@ func TestResolveBVN(t *testing.T) {
 }
 
 func TestResolveAccountNumber(t *testing.T) {
-	resp, err := c.Bank.ResolveAccountNumber("0022728151", "063")
-	if err == nil {
-		t.Errorf("Expected error, got %+v'", resp)
+	assert := assert.New(t)
+	account, err := c.Bank.ResolveAccountNumber("2208713487", "057")
+	if err != nil {
+		t.Error(err)
 	}
-
-	/*
-		if _, ok := resp["account_number"]; !ok {
-			t.Errorf("Expected response to contain 'account_number'")
-		}
-
-		if _, ok := resp["account_name"]; !ok {
-			t.Errorf("Expected response to contain 'account_name'")
-		}
-	*/
+	assert.Equal("EDOSA OSARIEMEN KELVIN", account.AccountName)
+	assert.Equal("2208713487", account.AccountNumber)
+	assert.Equal(21, account.BankID)
 }
