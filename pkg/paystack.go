@@ -98,6 +98,12 @@ type ListMeta struct {
 	PageCount int `json:"pageCount"`
 }
 
+// Balance represents the amount of money in the paystack integration
+type Balance struct {
+	Currency string `json:"currency"`
+	Balance  int    `json:"balance"`
+}
+
 // NewClient creates a new Paystack API client with the given API key
 // and HTTP client, allowing overriding of the HTTP client to use.
 // This is useful if you're running in a Google AppEngine environment
@@ -188,12 +194,13 @@ func (c *Client) ResolveCardBIN(bin int) (Response, error) {
 }
 
 // CheckBalance docs https://developers.paystack.co/v1.0/reference#resolve-card-bin
-func (c *Client) CheckBalance() (Response, error) {
-	resp := Response{}
-	err := c.Call("GET", "balance", nil, &resp)
-	// check balance 'data' node is an array
-	resp2 := resp["data"].([]interface{})[0].(map[string]interface{})
-	return resp2, err
+func (c *Client) CheckBalance() ([]Balance, error) {
+	type BalanceResponse struct {
+		Balances []Balance `json:"data,omitempty"`
+	}
+	r := BalanceResponse{}
+	err := c.Call("GET", "balance", nil, &r)
+	return r.Balances, err
 }
 
 // GetSessionTimeout fetches payment session timeout
