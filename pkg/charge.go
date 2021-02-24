@@ -11,9 +11,9 @@ type ChargeService service
 
 // Card represents a Card object
 type Card struct {
-	Number            string `json:"card_number,omitempty"`
-	CVV               string `json:"card_cvc,omitempty"`
-	ExpirtyMonth      string `json:"expiry_month,omitempty"`
+	Number            string `json:"number,omitempty"`
+	CVV               string `json:"cvv,omitempty"`
+	ExpiryMonth       string `json:"expiry_month,omitempty"`
 	ExpiryYear        string `json:"expiry_year,omitempty"`
 	AddressLine1      string `json:"address_line1,omitempty"`
 	AddressLine2      string `json:"address_line2,omitempty"`
@@ -88,21 +88,22 @@ func (s *ChargeService) SubmitPIN(pin, reference string) (Response, error) {
 }
 
 // SubmitOTP submits OTP to continue a charge
-// For more details see https://developers.paystack.co/v1.0/reference#submit-pin
+// For more details see https://paystack.com/docs/api/#charge-submit-otp
 func (s *ChargeService) SubmitOTP(otp, reference string) (Response, error) {
-	data := url.Values{}
-	data.Add("pin", otp)
-	data.Add("reference", reference)
+	data := map[string]string{
+		"otp":       otp,
+		"reference": reference,
+	}
 	resp := Response{}
 	err := s.client.Call("POST", "/charge/submit_otp", data, &resp)
 	return resp, err
 }
 
 // SubmitPhone submits Phone when requested
-// For more details see https://developers.paystack.co/v1.0/reference#submit-pin
+// For more details see https://paystack.com/docs/api/#charge-submit-phone
 func (s *ChargeService) SubmitPhone(phone, reference string) (Response, error) {
 	data := url.Values{}
-	data.Add("pin", phone)
+	data.Add("phone", phone)
 	data.Add("reference", reference)
 	resp := Response{}
 	err := s.client.Call("POST", "/charge/submit_phone", data, &resp)
@@ -110,20 +111,42 @@ func (s *ChargeService) SubmitPhone(phone, reference string) (Response, error) {
 }
 
 // SubmitBirthday submits Birthday when requested
-// For more details see https://developers.paystack.co/v1.0/reference#submit-pin
+// For more details see https://paystack.com/docs/api/#charge-submit-birthday
 func (s *ChargeService) SubmitBirthday(birthday, reference string) (Response, error) {
 	data := url.Values{}
-	data.Add("pin", birthday)
+	data.Add("birthday", birthday)
 	data.Add("reference", reference)
 	resp := Response{}
 	err := s.client.Call("POST", "/charge/submit_birthday", data, &resp)
 	return resp, err
 }
 
+// AddressVerification todo: add docs here
+type AddressVerification struct {
+	Address string
+	City    string
+	State   string
+	Zipcode string
+}
+
+// SubmitAddress submits address when requested
+// For more details see https://paystack.com/docs/api/#charge-submit_address
+func (s *ChargeService) SubmitAddress(a AddressVerification, reference string) (Response, error) {
+	data := url.Values{}
+	data.Add("address", a.Address)
+	data.Add("city", a.City)
+	data.Add("state", a.State)
+	data.Add("zipcode", a.Zipcode)
+	data.Add("reference", reference)
+	resp := Response{}
+	err := s.client.Call("POST", "/charge/submit_address", data, &resp)
+	return resp, err
+}
+
 // CheckPending returns pending charges
-// When you get "pending" as a charge status, wait 30 seconds or more,
+// When you get "pending" as a charge status, wait 10 seconds or more,
 // then make a check to see if its status has changed. Don't call too early as you may get a lot more pending than you should.
-// For more details see https://developers.paystack.co/v1.0/reference#check-pending-charge
+// For more details see https://paystack.com/docs/api/#charge-check
 func (s *ChargeService) CheckPending(reference string) (Response, error) {
 	u := fmt.Sprintf("/charge/%s", reference)
 	resp := Response{}
