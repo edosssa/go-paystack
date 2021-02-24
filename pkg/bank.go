@@ -1,6 +1,8 @@
 package paystack
 
-import "fmt"
+import (
+	"fmt"
+)
 
 // BankService handles operations related to the bank
 // For more details see https://developers.paystack.co/v1.0/reference#bank
@@ -24,6 +26,13 @@ type Bank struct {
 type BankList struct {
 	Meta   ListMeta
 	Values []Bank `json:"data,omitempty"`
+}
+
+// AccountDetails todo
+type AccountDetails struct {
+	AccountNumber string `json:"account_number"`
+	AccountName   string `json:"account_name"`
+	BankID        int    `json:"bank_id"`
 }
 
 // BVNResponse represents response from resolve_bvn endpoint
@@ -52,9 +61,9 @@ func (s *BankService) ResolveBVN(bvn int) (*BVNResponse, error) {
 }
 
 // ResolveAccountNumber docs https://developers.paystack.co/v1.0/reference#resolve-account-number
-func (s *BankService) ResolveAccountNumber(accountNumber, bankCode string) (Response, error) {
+func (s *BankService) ResolveAccountNumber(accountNumber, bankCode string) (AccountDetails, error) {
 	u := fmt.Sprintf("/bank/resolve?account_number=%s&bank_code=%s", accountNumber, bankCode)
-	resp := Response{}
-	err := s.client.Call("GET", u, nil, &resp)
-	return resp, err
+	r := &AccountDetails{}
+	err := s.client.Call("GET", u, nil, r)
+	return *r, err
 }
