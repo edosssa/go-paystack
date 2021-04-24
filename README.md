@@ -1,6 +1,6 @@
 # Paystack client for Golang
 
-[![GoDoc](http://img.shields.io/badge/godoc-reference-blue.svg)](http://godoc.org/github.com/snapay-labs/go-paystack)
+[![GoDoc](http://img.shields.io/badge/godoc-reference-blue.svg)](http://godoc.org/github.com/ZappieLabs/go-paystack)
 
 go-paystack is a Go client library for accessing the Paystack API.
 
@@ -9,7 +9,7 @@ go-paystack is a Go client library for accessing the Paystack API.
 go-paystack is available using the standard go get command.
 
 ```bash
-go get github.com/snapay-labs/go-paystack
+go get github.com/ZappieLabs/go-paystack
 ```
 
 Before running tests, you need to set the ```PAYSTACK_KEY``` environment variable.
@@ -37,7 +37,7 @@ go test ./...
 Getting up and running using go-paystack is simple, see for yourself.
 
 ```go
-import "github.com/snapay-labs/go-paystack"
+import "github.com/ZappieLabs/go-paystack"
 
 apiKey := "sk_test_b748a89ad84f35c2f1a8b81681f956274de048bb"
 
@@ -97,4 +97,4 @@ See the test files for more examples.
 
 <br>
 
-Made wth ❤️ by [Snapay](http://www.snapay.ng)
+Made wth ❤️ by [Zappie](http://zappie.co)

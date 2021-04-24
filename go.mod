@@ -1,4 +1,4 @@
-module github.com/snapay-labs/go-paystack
+module github.com/ZappieLabs/go-paystack
 
 go 1.15
 
