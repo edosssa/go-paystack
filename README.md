@@ -1,4 +1,4 @@
-# Paystack client for Golang
+# Go Paystack
 
 [![GoDoc](http://img.shields.io/badge/godoc-reference-blue.svg)](http://godoc.org/github.com/ZappieLabs/go-paystack)
 
