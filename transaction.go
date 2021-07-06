@@ -42,10 +42,10 @@ type AuthorizationRequest struct {
 // Transaction is the resource representing your Paystack transaction.
 // For more details see https://developers.paystack.co/v1.0/reference#initialize-a-transaction
 type Transaction struct {
-	ID              int                    `json:"id,omitempty"`
-	CreatedAt       string                 `json:"createdAt,omitempty"`
-	Domain          string                 `json:"domain,omitempty"`
-	Metadata        string                 `json:"metadata,omitempty"` //TODO: why is transaction metadata a string?
+	ID        int    `json:"id,omitempty"`
+	CreatedAt string `json:"createdAt,omitempty"`
+	Domain    string `json:"domain,omitempty"`
+	// Metadata        string                 `json:"metadata,omitempty"` //TODO: why is transaction metadata a string?
 	Status          string                 `json:"status,omitempty"`
 	Reference       string                 `json:"reference,omitempty"`
 	Amount          float32                `json:"amount,omitempty"`
